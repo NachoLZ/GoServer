@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"net"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -16,6 +15,14 @@ func random(min, max int) int {
 func main() {
 
 	PORT := ":50001"
+
+	var jugadas [3]string
+	jugadas[0] = "Piedra"
+	jugadas[1] = "Papel"
+	jugadas[2] = "Tijera"
+
+	var jugada int
+	var state int
 
 	s, err := net.ResolveUDPAddr("udp4", PORT)
 	if err != nil {
@@ -37,17 +44,55 @@ func main() {
 		n, addr, err := connection.ReadFromUDP(buffer)
 		fmt.Print("-> ", string(buffer[0:n-1]))
 
+		state = random(1, 10)
+
+		if strings.TrimSpace(string(buffer[0:n])) == "ready?" {
+			if state > 8 {
+
+				mensaje := []byte("NO")
+				fmt.Printf("data: %s\n", string(mensaje))
+				_, err = connection.WriteToUDP(mensaje, addr)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+
+			} else {
+				mensaje := []byte("OK")
+				fmt.Printf("data: %s\n", string(mensaje))
+				_, err = connection.WriteToUDP(mensaje, addr)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+
+				n, addr, err := connection.ReadFromUDP(buffer)
+				fmt.Print("-> ", string(buffer[0:n-1]))
+
+				if strings.TrimSpace(string(buffer[0:n])) == "jugada?" {
+					jugada = random(0, 2)
+					mensaje := []byte(jugadas[jugada])
+					fmt.Printf("data: %s\n", string(mensaje))
+					_, err = connection.WriteToUDP(mensaje, addr)
+					if err != nil {
+						fmt.Println(err)
+						return
+					}
+				}
+			}
+		}
+
 		if strings.TrimSpace(string(buffer[0:n])) == "STOP" {
 			fmt.Println("Exiting UDP server!")
 			return
 		}
 
-		data := []byte(strconv.Itoa(random(1, 1001)))
-		fmt.Printf("data: %s\n", string(data))
-		_, err = connection.WriteToUDP(data, addr)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		//data := []byte(strconv.Itoa(random(1, 1001)))
+		//fmt.Printf("data: %s\n", string(data))
+		//_, err = connection.WriteToUDP(data, addr)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return
+		//}
 	}
 }
