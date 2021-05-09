@@ -23,6 +23,7 @@ func main() {
 
 	var jugada int
 	var state int
+	var statebool bool
 
 	s, err := net.ResolveUDPAddr("udp4", PORT)
 	if err != nil {
@@ -56,6 +57,7 @@ func main() {
 					fmt.Println(err)
 					return
 				}
+				statebool = false
 
 			} else {
 				mensaje := []byte("OK")
@@ -65,20 +67,19 @@ func main() {
 					fmt.Println(err)
 					return
 				}
+				statebool = true
 
-				n, addr, err := connection.ReadFromUDP(buffer)
-				fmt.Print("-> ", string(buffer[0:n-1]))
+			}
+		}
 
-				if strings.TrimSpace(string(buffer[0:n])) == "jugada?" {
-					jugada = random(0, 2)
-					mensaje := []byte(jugadas[jugada])
-					fmt.Printf("data: %s\n", string(mensaje))
-					_, err = connection.WriteToUDP(mensaje, addr)
-					if err != nil {
-						fmt.Println(err)
-						return
-					}
-				}
+		if strings.TrimSpace(string(buffer[0:n])) == "jugada?" && statebool == true {
+			jugada = random(0, 2)
+			mensaje := []byte(jugadas[jugada])
+			fmt.Printf("data: %s\n", string(mensaje))
+			_, err = connection.WriteToUDP(mensaje, addr)
+			if err != nil {
+				fmt.Println(err)
+				return
 			}
 		}
 
@@ -94,5 +95,6 @@ func main() {
 		//	fmt.Println(err)
 		//	return
 		//}
+
 	}
 }
