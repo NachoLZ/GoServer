@@ -11,6 +11,8 @@ print("Servidor TCP escuchando en: ", SERVERPORT)
 print("Servidor UDP escuchando en: ", UDPPORT)
 condicion=True
 numero_jugadas=0
+flag = False
+udpserverAddr = 'localhost'
 
 while(condicion == True and numero_jugadas <= 3):	
 
@@ -18,21 +20,34 @@ while(condicion == True and numero_jugadas <= 3):
 	print("conectado con: "+ clientaddr[0])
 	msg = clientsocket.recv(2048).decode()
 
-	udpmsg, udpclientAddr = udpSocket.recvfrom(2048)
-	udpmessage = udpmsg.decode()
-	print("Se recibe desde UDP: ", udpmessage)
-	response = "" #respuesta a UDP
-	udpSocket.sendto(response.encode(), udpclientAddr)
+	
 
+	print(msg)
 
-
-	if(msg=="terminar"):
+	if(msg == "terminar"):
 		condicion=False
 		clientsocket.close()
 		break;
-	elif(msg=="ready?"):
-		respuesta="OK" #Aqui verificar disponibilidad del servidor cachipun
-		clientsocket.send(respuesta.encode())
+
+	elif(msg == "ready?"):
+		#udpSocket.send(msg.enconde())
+
+		response = "ready?" #respuesta a UDP
+		udpSocket.sendto(response.encode(), (udpserverAddr, UDPPORT))
+		udpmsg, addr = udpSocket.recvfrom(2048)
+		udpmessage = udpmsg.decode()
+		print("Se recibe desde UDP: ", udpmessage)
+
+
+		if udpmessage == "OK":
+			clientsocket.send(udpmessage.encode())
+			flag = True
+		else:
+			clientsocket.send(udpmessage.encode())
+			flag = False
+
+
+
 	elif(msg=="Papel"):
 		respuesta="has jugado papel  y el bot ha jugado X"#Aqui poner la jugada del servidor cachipun, y enviar el resultado.
 		clientsocket.send(respuesta.encode())
