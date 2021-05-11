@@ -23,10 +23,18 @@ if(respuesta=="OK"):
 		if(jugada=="terminar"):
 			clientSocket.send(jugada.encode())
 			print("Conexion terminada")
-			break;
+			break
 		clientSocket.send(jugada.encode())
 		resultadojugada=clientSocket.recv(2048).decode()
-		print("Servidor: "+ resultadojugada)
+		if(resultadojugada=="Has ganado la partida!" or resultadojugada=="El Bot te ha derrotado!"):
+			print("Servidor: "+ resultadojugada)
+			print("Juego ha terminado")
+			mensajeT="terminar"
+			clientSocket.send(mensajeT.encode())
+			clientSocket.close()
+			print("Se ha cerrado el juego")
+			break
+		print("Servidor: "+ resultadojugada)	
 elif(respuesta=="NO"):
 	print("Servidor cachipun no disponible")
 	print("Ejecute nuevamente el programa")
