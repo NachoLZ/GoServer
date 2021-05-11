@@ -15,7 +15,7 @@ if(mensaje=="terminar"):
 	print("Conexion terminada")
 respuesta=clientSocket.recv(2048).decode()
 print(respuesta+"\n")
-if(respuesta=="si"):
+if(respuesta=="OK"):
 	while(terminate==False):
 		clientSocket = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
 		clientSocket.connect((SERVER, PORT))
@@ -27,5 +27,9 @@ if(respuesta=="si"):
 		clientSocket.send(jugada.encode())
 		resultadojugada=clientSocket.recv(2048).decode()
 		print("Servidor: "+ resultadojugada)
-	
-clientSocket.close()
+elif(respuesta=="NO"):
+	print("Servidor cachipun no disponible")
+	print("Ejecute nuevamente el programa")
+	jugada="terminar"
+	clientSocket.send(jugada.encode())
+	clientSocket.close()
