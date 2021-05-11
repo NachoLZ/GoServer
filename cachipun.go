@@ -73,7 +73,7 @@ func main() {
 		}
 
 		if strings.TrimSpace(string(buffer[0:n])) == "jugada?" && statebool == true {
-			jugada = random(0, 2)
+			jugada = random(0, 3)
 			mensaje := []byte(jugadas[jugada])
 			fmt.Printf("data: %s\n", string(mensaje))
 			_, err = connection.WriteToUDP(mensaje, addr)

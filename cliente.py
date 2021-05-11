@@ -7,7 +7,7 @@ PORT = 55000
 terminate = False
 clientSocket = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
 clientSocket.connect((SERVER, PORT))
-mensaje=input("Pregunte por disponibilidad, escribiendo: disponible?")
+mensaje=input("Pregunte por disponibilidad, escribiendo: 'ready?'\n")
 clientSocket.send(mensaje.encode())
 if(mensaje=="terminar"):
 	clientSocket.send(mensaje.encode())
