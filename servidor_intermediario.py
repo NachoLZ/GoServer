@@ -28,8 +28,12 @@ while(condicion == True and puntajeCliente < 3 and puntajeUDP < 3):
 	print(msg)
 
 	if(msg == "terminar"):
+		response = "STOP" #respuesta a UDP
+		udpSocket.sendto(response.encode(), (udpserverAddr, UDPPORT))
 		condicion=False
+		print("Servidor cerrado")
 		clientsocket.close()
+		serverSocket.close()
 		break;
 
 	elif(msg == "ready?" and flag == False):
@@ -62,14 +66,39 @@ while(condicion == True and puntajeCliente < 3 and puntajeUDP < 3):
 		if(msg=="papel"):
 			print("Cliente ha jugado papel y el bot ha jugado " + udpmessage) #Aqui poner la jugada del servidor cachipun, y enviar el resultado.
 
+
 			if udpmessage == "Tijera":
-				respuesta = "El bot ha ganado un punto."
-				clientsocket.send(respuesta.encode())
 				puntajeUDP+=1
-			elif udpmessage == "Piedra":
-				respuesta = "Has ganado un punto."
+				if (puntajeCliente == 3 or puntajeUDP == 3):
+
+					if puntajeCliente == 3:
+						respuesta = "Has ganado la partida!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					elif puntajeUDP == 3:
+						respuesta = "El Bot te ha derrotado!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					break	
+				respuesta = "El bot ha ganado un punto: Has jugado Papel y el bot ha jugado " + udpmessage + "\nTu puntuación es: " + str(puntajeCliente) + " y la del Bot: " + str(puntajeUDP)
 				clientsocket.send(respuesta.encode())
+				
+			elif udpmessage == "Piedra":
 				puntajeCliente+=1
+				if (puntajeCliente == 3 or puntajeUDP == 3):
+
+					if puntajeCliente == 3:
+						respuesta = "Has ganado la partida!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					elif puntajeUDP == 3:
+						respuesta = "El Bot te ha derrotado!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					break	
+				respuesta = "Has ganado un punto: Has jugado Papel y el bot ha jugado " + udpmessage + "\nTu puntuación es: " + str(puntajeCliente) + " y la del Bot: " + str(puntajeUDP)
+				clientsocket.send(respuesta.encode())
+				
 			else:
 				respuesta = "Han empatado."
 				clientsocket.send(respuesta.encode())
@@ -78,14 +107,41 @@ while(condicion == True and puntajeCliente < 3 and puntajeUDP < 3):
 		elif(msg=="piedra"):
 			print("Cliente ha jugado piedra y el bot ha jugado " + udpmessage) #Aqui poner la jugada del servidor cachipun, y enviar el resultado.
 
+			
+
 			if udpmessage == "Papel":
-				respuesta = "El bot ha ganado un punto."
-				clientsocket.send(respuesta.encode())
 				puntajeUDP+=1
-			elif udpmessage == "Tijera":
-				respuesta = "Has ganado un punto."
+				if (puntajeCliente == 3 or puntajeUDP == 3):
+
+					if puntajeCliente == 3:
+						respuesta = "Has ganado la partida!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					elif puntajeUDP == 3:
+						respuesta = "El Bot te ha derrotado!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					break	
+
+				respuesta = "El bot ha ganado un punto: Has jugado Piedra y el bot ha jugado " + udpmessage + "\nTu puntuación es: " + str(puntajeCliente) + " y la del Bot: " + str(puntajeUDP)
 				clientsocket.send(respuesta.encode())
+
+			elif udpmessage == "Tijera":
 				puntajeCliente+=1
+				if (puntajeCliente == 3 or puntajeUDP == 3):
+
+					if puntajeCliente == 3:
+						respuesta = "Has ganado la partida!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					elif puntajeUDP == 3:
+						respuesta = "El Bot te ha derrotado!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					break	
+				respuesta = "Has ganado un punto: Has jugado Piedra y el bot ha jugado " + udpmessage + "\nTu puntuación es: " + str(puntajeCliente) + " y la del Bot: " + str(puntajeUDP)
+				clientsocket.send(respuesta.encode())
+				
 			else:
 				respuesta = "Han empatado."
 				clientsocket.send(respuesta.encode())
@@ -94,14 +150,40 @@ while(condicion == True and puntajeCliente < 3 and puntajeUDP < 3):
 		elif(msg=="tijera"):
 			print("Cliente ha jugado tijera y el bot ha jugado " + udpmessage) #Aqui poner la jugada del servidor cachipun, y enviar el resultado.
 
+
+
 			if udpmessage == "Piedra":
-				respuesta = "El bot ha ganado un punto."
-				clientsocket.send(respuesta.encode())
 				puntajeUDP+=1
-			elif udpmessage == "Papel":
-				respuesta = "Has ganado un punto."
+				if (puntajeCliente == 3 or puntajeUDP == 3):
+
+					if puntajeCliente == 3:
+						respuesta = "Has ganado la partida!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					elif puntajeUDP == 3:
+						respuesta = "El Bot te ha derrotado!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					break	
+				respuesta = "El bot ha ganado un punto: Has jugado Tijera y el bot ha jugado " + udpmessage + "\nTu puntuación es: " + str(puntajeCliente) + " y la del Bot: " + str(puntajeUDP)
 				clientsocket.send(respuesta.encode())
+				
+			elif udpmessage == "Papel":
 				puntajeCliente+=1
+				if (puntajeCliente == 3 or puntajeUDP == 3):
+
+					if puntajeCliente == 3:
+						respuesta = "Has ganado la partida!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					elif puntajeUDP == 3:
+						respuesta = "El Bot te ha derrotado!"
+						print(respuesta)
+						clientsocket.send(respuesta.encode())
+					break	
+				respuesta = "Has ganado un punto: Has jugado Tijera y el bot ha jugado " + udpmessage + "\nTu puntuación es: " + str(puntajeCliente) + " y la del Bot: " + str(puntajeUDP)
+				clientsocket.send(respuesta.encode())
+				
 			else:
 				respuesta = "Han empatado."
 				clientsocket.send(respuesta.encode())
@@ -111,24 +193,16 @@ while(condicion == True and puntajeCliente < 3 and puntajeUDP < 3):
 			respuesta = "Jugada no valida"
 			clientsocket.send(respuesta.encode())
 
+response = "STOP" #respuesta a UDP
+udpSocket.sendto(response.encode(), (udpserverAddr, UDPPORT))
 
-if puntajeCliente == 3:
-	respuesta = "Has ganado la partida!"
-	clientsocket.send(respuesta.encode())
-elif puntajeUDP == 3:
-	respuesta = "El Bot te ha derrotado!"
-	clientsocket.send(respuesta.encode())
+msg = clientsocket.recv(2048).decode()
+if(msg == "terminar"):
+	condicion = False
+	clientsocket.close()
+	print("Cerrando servidor...")
+	serverSocket.close()
 
-
-while(condicion == True):
-	clientsocket, clientaddr = serverSocket.accept()
-	msg = clientsocket.recv(2048).decode()
-	if(msg == "terminar"):
-		condicion = False
-		clientsocket.close()
-		break;
-
-			
 
 print("servidor cerrado")
 serverSocket.close()

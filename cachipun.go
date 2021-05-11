@@ -45,7 +45,7 @@ func main() {
 		n, addr, err := connection.ReadFromUDP(buffer)
 		fmt.Print("-> ", string(buffer[0:n-1]))
 
-		state = random(1, 10)
+		state = random(1, 11)
 
 		if strings.TrimSpace(string(buffer[0:n])) == "ready?" {
 			if state > 8 {

@@ -19,13 +19,15 @@ if(respuesta=="OK"):
 	while(terminate==False):
 		clientSocket = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
 		clientSocket.connect((SERVER, PORT))
-		jugada=input("Ingrese su jugada\n")
+		jugada=input("Ingrese su jugada: \n")
 		if(jugada=="terminar"):
 			clientSocket.send(jugada.encode())
 			print("Conexion terminada")
 			break
 		clientSocket.send(jugada.encode())
+
 		resultadojugada=clientSocket.recv(2048).decode()
+
 		if(resultadojugada=="Has ganado la partida!" or resultadojugada=="El Bot te ha derrotado!"):
 			print("Servidor: "+ resultadojugada)
 			print("Juego ha terminado")
@@ -35,6 +37,7 @@ if(respuesta=="OK"):
 			print("Se ha cerrado el juego")
 			break
 		print("Servidor: "+ resultadojugada)	
+
 elif(respuesta=="NO"):
 	print("Servidor cachipun no disponible")
 	print("Ejecute nuevamente el programa")
