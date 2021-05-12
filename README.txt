@@ -1,3 +1,8 @@
+Integrantes:
+Ignacio Lizana - ROL: 201673542-9
+Nicolás Miranda - ROL: 201673583-6
+
+
 Instrucciones de ejecución:
 
 1.- Abrir un terminal en la carpeta, luego ejecutar el comando: "python servidor_intermediario.py"
@@ -9,3 +14,9 @@ si es que este está listo y retorna "OK", el juego comenzará y se le preguntar
 6.- La jugada se debe ingresar como una de estas opciones: "piedra", "papel", "tijera" y presionar ENTER
 7.- Gana la partida el que obtenga primero los 3 puntos.
 8.- Si se desea terminar el juego en cualquier momento, se debe escribir "terminar" y presionar ENTER 
+9.- Cuando hay un ganador, se le avisa al cliente y este cierra automáticamente los servidores.
+
+
+Cliente: cliente.py
+Servidor Intermediario: servidor_intermediario.py
+Servidor Cachipún: cachipun.go
