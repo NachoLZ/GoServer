@@ -22,8 +22,8 @@ respuesta=clientSocket.recv(2048).decode()
 print(respuesta+"\n")
 if(respuesta=="OK"):
 	while(terminate==False):
-		clientSocket = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
-		clientSocket.connect((SERVER, PORT))
+		#clientSocket = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
+		#clientSocket.connect((SERVER, PORT))
 		jugada=input("Ingrese su jugada: \n")
 		if(jugada=="terminar"):
 			clientSocket.send(jugada.encode())

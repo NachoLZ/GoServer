@@ -16,14 +16,12 @@ udpserverAddr = 'localhost'
 
 puntajeCliente = 0
 puntajeUDP = 0
+clientsocket, clientaddr = serverSocket.accept()
+print("conectado con: "+ clientaddr[0])
 
 while(condicion == True and puntajeCliente < 3 and puntajeUDP < 3):	
 
-	clientsocket, clientaddr = serverSocket.accept()
-	print("conectado con: "+ clientaddr[0])
 	msg = clientsocket.recv(2048).decode()
-
-	
 
 	print(msg)
 
